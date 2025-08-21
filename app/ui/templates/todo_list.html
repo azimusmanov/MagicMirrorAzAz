@@ -4,10 +4,15 @@
       <input type="checkbox"
              {% if t.done %}checked{% endif %}
              onchange="fetch('/todo/{{t.id}}?done=' + this.checked, {method:'PATCH'})
-               .then(r=>r.text())
-               .then(html=>{ document.getElementById('todo-list').outerHTML = html; })"
-             class="w-4 h-4"/>
-      <span class="{% if t.done %}line-through text-gray-500{% endif %}">{{ t.title }}</span>
+               .then(r=>r.text()).then(html=>{ document.getElementById('todo-list').outerHTML = html; })">
+      <form hx-post="/todo/{{t.id}}/rename" hx-target="#todo-list" hx-swap="outerHTML" class="flex items-center gap-2">
+        <input name="title" value="{{ t.title }}" class="border rounded px-2 py-1"/>
+        <button class="text-sm px-2 py-1 rounded bg-gray-200">Save</button>
+      </form>
+      <button class="text-sm px-2 py-1 rounded bg-red-500 text-white"
+              hx-delete="/todo/{{t.id}}"
+              hx-target="#todo-list"
+              hx-swap="outerHTML">Delete</button>
     </li>
   {% else %}
     <li class="text-gray-500">No tasks yet.</li>

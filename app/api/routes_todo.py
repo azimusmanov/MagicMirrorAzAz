@@ -50,3 +50,21 @@ def update_todo(
     session.commit()
     session.refresh(todo)
     return _render_list(request, session)
+
+@router.delete("/{todo_id}", response_class=HTMLResponse)
+def delete_todo(request: Request, todo_id: int, session=Depends(get_session)):
+    todo = session.get(Todo, todo_id)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Not found")
+    session.delete(todo); session.commit()
+    return _render_list(request, session)
+
+@router.post("/{todo_id}/rename", response_class=HTMLResponse)
+def rename_todo(request: Request, todo_id: int, title: str = Form(...), session=Depends(get_session)):
+    todo = session.get(Todo, todo_id)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Not found")
+    todo.title = title
+    session.add(todo); session.commit(); session.refresh(todo)
+    return _render_list(request, session)
+

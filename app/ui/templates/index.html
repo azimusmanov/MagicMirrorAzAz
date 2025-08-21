@@ -20,6 +20,14 @@
          hx-trigger="load"></div>
   </div>
 
+  <div class="bg-white rounded-2xl shadow p-4 mt-6">
+    <h2 class="text-xl font-medium mb-3">Weather</h2>
+    <div id="weather" hx-get="/weather/partial" hx-trigger="load,every 15m">
+      
+    </div>
+  </div>
+
+
   <script>
     fetch('/profiles/current').then(r=>r.json()).then(j=>{
       document.getElementById('who').textContent = j.name;

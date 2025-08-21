@@ -1,0 +1,12 @@
+<div id="weather">
+  {% if w %}
+    <div class="flex items-center gap-4">
+      <div class="text-3xl">{{ w.main.temp|round }}°C</div>
+      <div class="text-gray-600">
+        {{ w.weather[0].main }} · {{ w.name }}
+      </div>
+    </div>
+  {% else %}
+    <div class="text-gray-500">Set OPENWEATHER_API_KEY in .env</div>
+  {% endif %}
+</div>

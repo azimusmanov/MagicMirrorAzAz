@@ -10,7 +10,7 @@ from app.api.routes_profiles  import router as profiles_router
 from app.api.routes_todo      import router as todo_router
 from app.api.routes_ws        import router as ws_router
 from app.jobs.scheduler       import start_scheduler
-
+from app.api.routes_dashboard  import weather_router
 from sqlmodel import Session, select
 from app.models.db import engine
 from app.models.model_profile import Profile
@@ -24,7 +24,7 @@ app.include_router(root_router)
 app.include_router(profiles_router)
 app.include_router(todo_router)
 app.include_router(ws_router)
-
+app.include_router(weather_router)
 @app.on_event("startup")
 def on_startup():
     init_db()
