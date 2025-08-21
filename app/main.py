@@ -11,6 +11,11 @@ from app.api.routes_todo      import router as todo_router
 from app.api.routes_ws        import router as ws_router
 from app.jobs.scheduler       import start_scheduler
 
+from sqlmodel import Session, select
+from app.models.db import engine
+from app.models.model_profile import Profile
+
+
 load_dotenv()
 app = FastAPI(title="Magic Mirror (Stage 0)")
 app.mount("/static", StaticFiles(directory="app/ui/static"), name="static")
@@ -23,4 +28,9 @@ app.include_router(ws_router)
 @app.on_event("startup")
 def on_startup():
     init_db()
+    # seed default current profile if none
+    with Session(engine) as s:
+        if not s.exec(select(Profile)).first():
+            s.add(Profile(name="Azim", is_current=True))
+            s.commit()
     start_scheduler()
