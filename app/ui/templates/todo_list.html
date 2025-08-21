@@ -1,0 +1,15 @@
+<ul class="space-y-2" id="todo-list">
+  {% for t in todos %}
+    <li class="flex items-center gap-3">
+      <input type="checkbox"
+             {% if t.done %}checked{% endif %}
+             onchange="fetch('/todo/{{t.id}}?done=' + this.checked, {method:'PATCH'})
+               .then(r=>r.text())
+               .then(html=>{ document.getElementById('todo-list').outerHTML = html; })"
+             class="w-4 h-4"/>
+      <span class="{% if t.done %}line-through text-gray-500{% endif %}">{{ t.title }}</span>
+    </li>
+  {% else %}
+    <li class="text-gray-500">No tasks yet.</li>
+  {% endfor %}
+</ul>
