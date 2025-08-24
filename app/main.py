@@ -34,3 +34,18 @@ def on_startup():
             s.add(Profile(name="Azim", is_current=True))
             s.commit()
     start_scheduler()
+
+# Command to run:
+# python3 -m app.main
+# OR 
+# uvicorn app.main:app --reload
+if __name__ == '__main__':
+    import uvicorn
+    import webbrowser
+    import threading
+
+    def open_browser():
+        webbrowser.open("http://localhost:8000")
+
+    threading.Timer(1.5, open_browser).start()  # Give server time to start
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=False)

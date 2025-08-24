@@ -29,4 +29,6 @@ Running the App:
 2. Set environment variables in a `.env` file (e.g., `OPENWEATHER_API_KEY`, `CITY`).
 3. Start the server:
 uvicorn app.main:app --reload
-4. Visit [http://localhost:8000](http://localhost:8000) in your browser to see the dashboard.
+4. Visit [http://localhost:8000](
+    http://localhost:8000
+    ) in your browser to see the dashboard.
