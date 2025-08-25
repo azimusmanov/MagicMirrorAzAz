@@ -1,0 +1,7 @@
+currently working on: weather
+
+todo soon: pull current location, improve weather call data format, implement display in html, use OAuth to integrate w spotify/google cal/wtv else
+
+todo later: implement profiles / Face/voice models
+
+todo later later: order pi, picam, 2way mirror, screen, begin construction
