@@ -5,3 +5,5 @@ __pycache__/
 mirror.db
 .cache/
 .DS_Store
+.env
+test_weather.py

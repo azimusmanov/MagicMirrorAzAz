@@ -4,13 +4,14 @@ load_dotenv()
 import json
 import urllib.request
 import urllib.parse
+from get_loc import get_location
 
 API_BASE = "https://api.openweathermap.org/data/2.5/forecast"
 
 def fetch_weather():
     key = os.getenv("OPENWEATHER_API_KEY")
-    lat = os.getenv("LAT")
-    lon = os.getenv("LON")
+    lat, lon = get_location()
+
     if not lat:
         print("NO Lat")
     if not key or not lat or not lon:
