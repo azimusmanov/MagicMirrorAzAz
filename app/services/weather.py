@@ -4,43 +4,60 @@ load_dotenv()
 import json
 import urllib.request
 import urllib.parse
-from get_loc import get_location
+from datetime import datetime, timezone, timedelta  # <-- add timedelta
 
 API_BASE = "https://api.openweathermap.org/data/2.5/forecast"
 
 def fetch_weather():
     key = os.getenv("OPENWEATHER_API_KEY")
+    from get_loc import get_location
     lat, lon = get_location()
-
-    if not lat:
-        print("NO Lat")
-    if not key or not lat or not lon:
+    if not lat or not key or not lon:
         print("failed")
         return None
 
-    params = {
-        "lat": lat,
-        "lon": lon,
-        "units": "imperial",  # Fahrenheit
-        "appid": key
-    }
-
+    params = {"lat": lat, "lon": lon, "units": "imperial", "appid": key}
     url = f"{API_BASE}?{urllib.parse.urlencode(params)}"
 
     try:
         with urllib.request.urlopen(url, timeout=8) as r:
             data = json.loads(r.read().decode("utf-8"))
-            # Extract essential info for widget (from forecast list)
-            current = data["list"][0]
-            result = {
-                "current": {
-                    "temp": current["main"]["temp"],
-                    "weather": current["weather"][0]["main"],
-                    "rain": current.get("rain", {}).get("3h", 0)
-                },
-                "city": data["city"]["name"]
-            }
-            return result
-    except Exception:
-        print("Exception")
+
+        current = data["list"][0]
+
+        # Build tz from OpenWeather’s city timezone offset (seconds from UTC)
+        offset_sec = int(data["city"].get("timezone", 0))
+        local_tz = timezone(timedelta(seconds=offset_sec))
+
+        now_local = datetime.now(local_tz)
+        today_local = now_local.date()
+
+        summary = []
+        for entry in data["list"]:
+            # forecast dt is a UTC unix timestamp
+            entry_utc = datetime.fromtimestamp(int(entry["dt"]), tz=timezone.utc)
+            entry_local = entry_utc.astimezone(local_tz)
+
+            # keep only items AFTER now, and (optional) only for the rest of today
+            if entry_local > now_local and entry_local.date() == today_local:
+                summary.append({
+                    "time": entry_local.strftime("%H:%M"),
+                    "temp": entry["main"]["temp"],
+                    "weather": entry["weather"][0]["main"],
+                    "rain": entry.get("rain", {}).get("3h", 0),
+                })
+
+        result = {
+            "current": {
+                "temp": current["main"]["temp"],
+                "weather": current["weather"][0]["main"],
+                "rain": current.get("rain", {}).get("3h", 0),
+            },
+            "city": data["city"]["name"],
+            "today_summary": summary,
+        }
+        return result
+
+    except Exception as e:
+        print("Exception:", repr(e))
         return None
