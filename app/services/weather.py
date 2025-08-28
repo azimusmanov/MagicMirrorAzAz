@@ -5,18 +5,29 @@ import json
 import urllib.request
 import urllib.parse
 from datetime import datetime, timezone, timedelta  # <-- add timedelta
+from app.services.get_loc import get_location
+import requests
 
 API_BASE = "https://api.openweathermap.org/data/2.5/forecast"
 
+def get_units(lat, lon):
+    # Use a free geolocation API to get country code
+    try:
+        resp = requests.get(f"https://geocode.maps.co/reverse?lat={lat}&lon={lon}")
+        country = resp.json().get("address", {}).get("country_code", "us").lower()
+        return "imperial" if country == "us" else "metric"
+    except Exception:
+        return "metric"
+    
 def fetch_weather():
     key = os.getenv("OPENWEATHER_API_KEY")
-    from get_loc import get_location
     lat, lon = get_location()
+    units = get_units(lat, lon)
     if not lat or not key or not lon:
         print("failed")
         return None
 
-    params = {"lat": lat, "lon": lon, "units": "imperial", "appid": key}
+    params = {"lat": lat, "lon": lon, "units": units, "appid": key}
     url = f"{API_BASE}?{urllib.parse.urlencode(params)}"
 
     try:
@@ -55,6 +66,7 @@ def fetch_weather():
             },
             "city": data["city"]["name"],
             "today_summary": summary,
+            "units": units
         }
         return result
 

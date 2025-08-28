@@ -32,3 +32,7 @@ uvicorn app.main:app --reload
 4. Visit [http://localhost:8000](
     http://localhost:8000
     ) in your browser to see the dashboard.
+
+OR run
+
+python3 -m app.main

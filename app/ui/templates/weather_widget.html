@@ -1,12 +1,26 @@
 <div id="weather">
   {% if w %}
     <div class="flex items-center gap-4">
-      <div class="text-3xl">{{ w.main.temp|round }}°C</div>
+      <div class="text-3xl">{{ w.current.temp|round }}°{% if w.units == "metric" %}C{% else %}F{% endif %}</div>
       <div class="text-gray-600">
-        {{ w.weather[0].main }} · {{ w.name }}
+        {{ w.current.weather }} · {{ w.city }}
       </div>
     </div>
-  {% else %}
-    <div class="text-gray-500">Set OPENWEATHER_API_KEY in .env</div>
-  {% endif %}
-</div>
+    {% if w.today_summary %}
+        <div class="mt-2 text-sm">
+          <div class="font-medium">Today's forecast:</div>
+          <div class="flex gap-3 overflow-x-auto py-2">
+            {% for hour in w.today_summary %}
+            <div class="text-center">
+              <div>{{ hour.time }}</div>
+              <div>{{ hour.temp|round }}°</div>
+              <div class="text-xs">{{ hour.weather }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      {% else %}
+        <div class="text-gray-500">Error Retrieving Weather</div>
+      {% endif %}
+    </div>
