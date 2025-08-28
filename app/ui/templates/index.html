@@ -3,6 +3,14 @@
   <h1 class="text-2xl font-semibold mb-2">Dashboard</h1>
   <p class="text-sm text-gray-600 mb-6">Profile: <span id="who">Loading…</span></p>
 
+  <!-- clock widget -->
+  <div class="bg-white rounded-2xl shadow p-4 mb-6">
+    <div class="flex flex-col items-center">
+      <div id="clock" class="text-4xl font-bold">00:00:00</div>
+      <div id="date" class="text-xl text-gray-600">Loading date...</div>
+    </div>
+  </div>
+
   <div class="bg-white rounded-2xl shadow p-4">
     <h2 class="text-xl font-medium mb-3">ToDo</h2>
 
@@ -30,5 +38,34 @@
     fetch('/profiles/current').then(r=>r.json()).then(j=>{
       document.getElementById('who').textContent = j.name;
     });
+  </script>
+
+
+  <!-- clock script -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      
+      // Update time - using 24-hour format with leading zeros
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+      
+      // Update date - format: Monday, January 1, 2023
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      };
+      document.getElementById('date').textContent = now.toLocaleDateString(undefined, options);
+    }
+    
+    // Update immediately
+    updateClock();
+    
+    // Then update every second
+    setInterval(updateClock, 1000);
   </script>
 {% endblock %}
