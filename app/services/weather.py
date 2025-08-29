@@ -52,7 +52,7 @@ def fetch_weather():
             # keep only items AFTER now, and (optional) only for the rest of today
             if entry_local > now_local and entry_local.date() == today_local:
                 summary.append({
-                    "time": entry_local.strftime("%H:%M"),
+                    "time": entry_local.strftime("%I:%M %p").lstrip("0"),
                     "temp": entry["main"]["temp"],
                     "weather": entry["weather"][0]["main"],
                     "rain": entry.get("rain", {}).get("3h", 0),

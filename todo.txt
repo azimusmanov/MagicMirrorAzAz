@@ -1,6 +1,7 @@
 currently working on: weather
 
-todo soon: automatically detertmine F or C, implement display in html
+todo soon:
+Fix Layout, make htmx widgets load every so often
 
 use OAuth to integrate w spotify/google cal/wtv else
 
