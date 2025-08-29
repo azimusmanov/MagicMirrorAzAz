@@ -31,9 +31,10 @@
   <div class="bg-white rounded-2xl shadow p-4 mt-6">
     <h2 class="text-xl font-medium mb-3">Weather</h2>
     <div id="weather-container" hx-get="/weather/partial" hx-trigger="load"></div>
-    <div id="quote-container" hx-get="/quotes/partial" hx-trigger="load"></div>
-    <div id="news-container" hx-get="/news/partial" hx-trigger="load"></div>
   </div>
+
+  <div id="quote-container" hx-get="/quotes/partial" hx-trigger="load"></div>
+  <div id="news-container" hx-get="/news/partial" hx-trigger="load"></div>
 
 
   <script>
