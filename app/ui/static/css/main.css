@@ -1,0 +1,43 @@
+/* Main styling for Magic Mirror */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Widget styling */
+.widget-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow p-4;
+}
+
+.clock-display {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.date-display {
+  font-size: 1.25rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Weather icons */
+.weather-icon {
+  font-size: 2rem;
+}
+
+/* Mirror mode - inverts colors for use on a mirror */
+.mirror-mode {
+  filter: invert(1);
+}
+
+/* Form elements */
+input.task-input {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+button.action-button {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+}
