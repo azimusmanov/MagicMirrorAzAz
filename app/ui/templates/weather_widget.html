@@ -17,26 +17,28 @@
           <i class="fas fa-cloud text-gray-400"></i>
         {% endif %}
       </div>
-      <div class="text-3xl">{{ w.current.temp|round }}°{% if w.units == "metric" %}C{% else %}F{% endif %}</div>
-      <div class="text-gray-600">
-        {{ w.current.weather }} · {{ w.city }}
+      <div>
+        <div class="text-3xl">{{ w.current.temp|round }}°{% if w.units == "metric" %}C{% else %}F{% endif %}</div>
+        <div class="text-gray-600 dark:text-gray-400">
+          {{ w.current.weather }} · {{ w.city }}
+        </div>
       </div>
     </div>
     {% if w.today_summary %}
-        <div class="mt-2 text-sm">
-          <div class="font-medium">Today's forecast:</div>
-          <div class="flex gap-3 overflow-x-auto py-2">
-            {% for hour in w.today_summary %}
-            <div class="text-center">
-              <div>{{ hour.time }}</div>
-              <div>{{ hour.temp|round }}°</div>
-              <div class="text-xs">{{ hour.weather }}</div>
-            </div>
-            {% endfor %}
+      <div class="mt-4 text-sm">
+        <div class="font-medium">Today's forecast:</div>
+        <div class="flex gap-3 overflow-x-auto py-2">
+          {% for hour in w.today_summary %}
+          <div class="text-center">
+            <div>{{ hour.time }}</div>
+            <div>{{ hour.temp|round }}°</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400">{{ hour.weather }}</div>
           </div>
+          {% endfor %}
         </div>
-        {% endif %}
-      {% else %}
-        <div class="text-gray-500">Error Retrieving Weather</div>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="text-gray-500 dark:text-gray-400">Error Retrieving Weather</div>
+  {% endif %}
+</div>

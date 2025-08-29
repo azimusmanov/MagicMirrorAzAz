@@ -1,7 +1,10 @@
-<div id="quote" class="bg-white rounded-2xl shadow p-4 my-6">
-  <h2 class="text-xl font-medium mb-3">Daily Inspiration</h2>
-  <div class="text-center">
-    <div class="text-lg italic">"{{ quote.content }}"</div>
-    <div class="mt-2 text-gray-600">— {{ quote.author }}</div>
-  </div>
+<div id="quote">
+  {% if quote %}
+    <div class="text-center">
+      <div class="text-lg italic">"{{ quote.content }}"</div>
+      <div class="mt-2 text-gray-600 dark:text-gray-400">— {{ quote.author }}</div>
+    </div>
+  {% else %}
+    <div class="text-gray-500 dark:text-gray-400">Error loading quote</div>
+  {% endif %}
 </div>

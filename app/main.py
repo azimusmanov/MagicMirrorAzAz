@@ -3,6 +3,8 @@ import os
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
+from contextlib import asynccontextmanager
+
 
 from app.models.db import init_db
 from app.api.routes_dashboard import router as root_router
@@ -15,9 +17,18 @@ from sqlmodel import Session, select
 from app.models.db import engine
 from app.models.model_profile import Profile
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup code
+    init_db()
+    start_scheduler()
+    yield
+    # Shutdown code (if any)
+    # Example: close_db_connections()
 
+# Load API keys and other secrets
 load_dotenv()
-app = FastAPI(title="Magic Mirror (Stage 0)")
+app = FastAPI(lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="app/ui/static"), name="static")
 
 app.include_router(root_router)
@@ -25,15 +36,6 @@ app.include_router(profiles_router)
 app.include_router(todo_router)
 app.include_router(ws_router)
 app.include_router(weather_router)
-@app.on_event("startup")
-def on_startup():
-    init_db()
-    # seed default current profile if none
-    with Session(engine) as s:
-        if not s.exec(select(Profile)).first():
-            s.add(Profile(name="Azim", is_current=True))
-            s.commit()
-    start_scheduler()
 
 # Command to run:
 # python3 -m app.main
