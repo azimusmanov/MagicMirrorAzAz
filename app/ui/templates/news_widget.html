@@ -1,0 +1,10 @@
+<div id="news" class="bg-white rounded-2xl shadow p-4 my-6">
+  <h2 class="text-xl font-medium mb-3">Latest News</h2>
+  <ul class="space-y-2">
+    {% for item in headlines %}
+    <li>
+      <div class="text-sm">{{ item.title }}</div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

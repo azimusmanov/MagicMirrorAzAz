@@ -1,6 +1,22 @@
 <div id="weather">
   {% if w %}
     <div class="flex items-center gap-4">
+      <div class="text-5xl weather-icon">
+        <!-- Map weather conditions to icons -->
+        {% if w.current.weather == "Clear" %}
+          <i class="fas fa-sun text-yellow-400"></i>
+        {% elif w.current.weather == "Clouds" %}
+          <i class="fas fa-cloud text-gray-400"></i>
+        {% elif w.current.weather == "Rain" %}
+          <i class="fas fa-cloud-rain text-blue-400"></i>
+        {% elif w.current.weather == "Thunderstorm" %}
+          <i class="fas fa-bolt text-yellow-600"></i>
+        {% elif w.current.weather == "Snow" %}
+          <i class="fas fa-snowflake text-blue-200"></i>
+        {% else %}
+          <i class="fas fa-cloud text-gray-400"></i>
+        {% endif %}
+      </div>
       <div class="text-3xl">{{ w.current.temp|round }}°{% if w.units == "metric" %}C{% else %}F{% endif %}</div>
       <div class="text-gray-600">
         {{ w.current.weather }} · {{ w.city }}
