@@ -24,7 +24,13 @@
       <h2 class="text-xl font-medium mb-3">Daily Inspiration</h2>
       <div id="quote-container" hx-get="/quotes/partial" hx-trigger="load, refreshQuote from:body" hx-swap="innerHTML"></div>
     </div>
+    
+    <div class="widget-card">
+      <h2 class="text-xl font-medium mb-3">Calendar</h2>
+      <div id="calendar-container" hx-get="/calendar/partial" hx-trigger="load, refreshCalendar from:body" hx-swap="innerHTML"></div>
+    </div>
   </div>
+
 
   <!-- Full-width widgets -->
   <div class="widget-card mt-6">

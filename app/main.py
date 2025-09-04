@@ -11,6 +11,7 @@ from app.api.routes_dashboard import router as root_router
 from app.api.routes_profiles  import router as profiles_router
 from app.api.routes_todo      import router as todo_router
 from app.api.routes_ws        import router as ws_router
+from app.api.routes_gcal      import router as gcal_router
 from app.jobs.scheduler       import start_scheduler
 from app.api.routes_dashboard  import weather_router
 from sqlmodel import Session, select
@@ -36,6 +37,7 @@ app.include_router(profiles_router)
 app.include_router(todo_router)
 app.include_router(ws_router)
 app.include_router(weather_router)
+app.include_router(gcal_router)
 
 # Command to run:
 # python3 -m app.main

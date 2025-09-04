@@ -1,0 +1,19 @@
+<!-- app/ui/templates/calendar_widget.html -->
+<div id="calendar">
+  {% if events and events|length > 0 %}
+    <ul class="space-y-2">
+      {% for e in events %}
+        <li class="py-1 border-b border-gray-100 dark:border-gray-700 last:border-0">
+          <div class="flex justify-between">
+            <div class="text-sm font-medium">{{ e.summary }}</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">{{ e.date }} · {{ e.time }}–{{ e.end }}</div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="text-gray-500 dark:text-gray-400">
+      Connect Google Calendar to see events.
+    </div>
+  {% endif %}
+</div>
