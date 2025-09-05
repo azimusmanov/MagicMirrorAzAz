@@ -27,6 +27,7 @@ LOCAL_QUOTES = [
     {"content": "Don’t wish it were easier, wish you were better.", "author": "Jim Rohn"},
     {"content": "Consistency beats intensity every time.", "author": "Self-Reminder"},
     {"content": "What consumes your mind controls your life.", "author": "Unknown"}
+    {"content": "The master has failed more times than the student has tried.": "Unknown"}
 ]
 
 def get_daily_quote():
