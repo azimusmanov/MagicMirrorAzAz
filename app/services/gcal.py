@@ -1,21 +1,25 @@
-# app/services/gcal.py
+# filepath: /Users/azimusmanov/Documents/MagicMirrorAzAz/app/services/gcal.py
 import os
-# from google.oauth2.credentials import Credentials
-# from google_auth_oauthlib.flow import Flow
-# from googleapiclient.discovery import build
-from datetime import datetime, timedelta
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import Flow
+from googleapiclient.discovery import build
+from datetime import datetime, timezone, timedelta
 
-# Temporary while OAuth is not yet setup
+# Temporary demo events function - keep this for fallback
 def get_demo_events(days: int = 3):
-    """Return demo events until OAuth is wired up."""
+    """Return demo events until OAuth is implemented."""
     now = datetime.now().replace(second=0, microsecond=0)
+    
+    # Demo events with variety
     items = [
         {"summary": "Morning Standup", "start": now.replace(hour=9, minute=0)},
         {"summary": "Gym", "start": now.replace(hour=18, minute=0)},
         {"summary": "Dinner", "start": now.replace(hour=20, minute=30)},
         {"summary": "Flight", "start": (now + timedelta(days=1)).replace(hour=11, minute=45)},
+        {"summary": "Doctor Appointment", "start": (now + timedelta(days=2)).replace(hour=14, minute=30)},
+        {"summary": "Birthday Party", "start": (now + timedelta(days=2)).replace(hour=19, minute=0)},
     ]
-    # format to 12-hour without leading zero, and add end as +1h for display
+    
     events = []
     for it in items:
         start = it["start"]
@@ -48,9 +52,9 @@ def get_events(credentials_json, days=7):
     credentials = Credentials.from_authorized_user_info(credentials_json, SCOPES)
     service = build('calendar', 'v3', credentials=credentials)
     
-    # Get events from primary calendar
-    now = datetime.utcnow().isoformat() + 'Z'  # 'Z' = UTC
-    end_date = (datetime.utcnow() + timedelta(days=days)).isoformat() + 'Z'
+    # Fix the deprecated utcnow
+    now = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+    end_date = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat().replace('+00:00', 'Z')
     
     events_result = service.events().list(
         calendarId='primary',

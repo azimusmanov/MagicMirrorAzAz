@@ -8,3 +8,4 @@ mirror.db
 .env
 test_weather.py
 summary.txt
+client_secret.json

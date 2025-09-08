@@ -3,17 +3,33 @@
   {% if events and events|length > 0 %}
     <ul class="space-y-2">
       {% for e in events %}
-        <li class="py-1 border-b border-gray-100 dark:border-gray-700 last:border-0">
-          <div class="flex justify-between">
-            <div class="text-sm font-medium">{{ e.summary }}</div>
-            <div class="text-xs text-gray-500 dark:text-gray-400">{{ e.date }} · {{ e.time }}–{{ e.end }}</div>
+      <li class="py-1 border-b border-gray-100 dark:border-gray-700 last:border-0">
+        <div class="flex justify-between">
+          <div class="text-sm font-medium">{{ e.summary }}</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">
+            {% if days > 1 %}{{ e.date }} · {% endif %}{{ e.time }}{% if e.end and e.time != "All day" %}–{{ e.end }}{% endif %}
           </div>
-        </li>
+        </div>
+      </li>
       {% endfor %}
     </ul>
   {% else %}
-    <div class="text-gray-500 dark:text-gray-400">
-      Connect Google Calendar to see events.
+    <div class="text-center p-4">
+      <p class="text-gray-500 dark:text-gray-400 mb-3">No events for {% if days == 1 %}today{% else %}the next {{ days }} days{% endif %}</p>
+      <a href="/gcal/auth" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+        Connect Google Calendar
+      </a>
     </div>
+  {% endif %}
+  
+  {% if events and events|length > 0 %}
+  <div class="mt-3 flex justify-between items-center">
+    <span class="text-xs text-gray-500 dark:text-gray-400">
+      Showing: {% if days == 1 %}Today only{% else %}Next {{ days }} days{% endif %}
+    </span>
+    <a href="/gcal/auth" class="text-xs text-blue-500 hover:underline">
+      Connect real calendar
+    </a>
+  </div>
   {% endif %}
 </div>

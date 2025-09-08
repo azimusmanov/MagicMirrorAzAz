@@ -26,4 +26,16 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(() => {
     htmx.trigger("#news-container", "refreshNews");
   }, 2 * 60 * 60 * 1000);
+
+  // Calendar: Refresh every 30 minutes
+  setInterval(() => {
+    htmx.trigger("#calendar-container", "refreshGcal");
+  }, 30 * 60 * 1000); // Refresh every 30 minutes
 });
+
+// For calendar days parameter
+function updateCalendarDays(days) {
+  const container = document.getElementById('calendar-container');
+  container.setAttribute('hx-get', `/gcal/partial?days=${days}`);
+  htmx.trigger(container, 'refreshGcal');
+}
