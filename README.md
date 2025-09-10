@@ -6,7 +6,7 @@ I am currently still in the early stages, designing and implementing the mirror 
 
 ## Overview
 
-This project is a modular FastAPI web application for a personal dashboard ("Magic Mirror"). It features user profiles, a to-do list, weather widgets, quotes, and news headlines. The backend uses SQLModel for database models and APScheduler for scheduled jobs. The frontend is rendered with Jinja2 templates and supports dynamic updates via HTMX and JavaScript.
+This project is a modular FastAPI web application for a personal dashboard ("Magic Mirror"). It features user profiles, a to-do list, weather widgets, quotes, and news headlines. The backend uses SQLModel for database models and APScheduler for scheduled jobs. The frontend is rendered with Jinja2 templates and supports dynamic updates via HTMX and JavaScript. I am currently working on integrating some OAuth features, probably just Google Calendar (and maybe Leetcode) for now.
 
 ## Key Components
 
@@ -21,17 +21,19 @@ This project is a modular FastAPI web application for a personal dashboard ("Mag
 ## How It Works
 
 - On startup, the app initializes the database and seeds a default profile if none exists.
-- The dashboard displays profile info, to-do list, weather widget, quotes, and news.
+- The dashboard displays profile info, to-do list, weather widget, quotes, news, and a sample calendar (OAuth not working yet).
 - Widgets update dynamically using HTMX with configurable refresh intervals.
 - WebSocket endpoint (`/ws/events`) is ready for future real-time event streaming.
-- Profiles can be switched and managed via API endpoints.
 
 ## Running the App
 
 1. Install dependencies
-2. Set environment variables in a `.env` file (e.g., `OPENWEATHER_API_KEY`, `NEWS_API_KEY`)
+2. Set environment variables in a `.env` file (e.g., `OPENWEATHER_API_KEY`, `NEWS_API_KEY`), along with client_secrets for Google Calendar OAuth integration.
 3. Start the server:
 uvicorn app.main:app --reload
 OR
 python3 -m app.main
 
+## Current Status
+
+The scope of this project will likely be shortened due to the start of the academic year. I am currently working on fully integrating the google calendar widget, aswell as fixing the layout of the todo widget. After this, I will likely refactor the styling and CSS of the page to make it more streamlined for 2-way mirror display. After this I will move into my new house, so hopefully then I will have time to actually purchase materials and construct the materials. I'll probably hold off on profile functionality for now, until some point later next year when I have more time.
