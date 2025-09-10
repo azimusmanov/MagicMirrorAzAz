@@ -27,10 +27,19 @@
 
     <!-- Google Calendar widget -->
     <div class="widget-card">
-      <h2 class="text-xl font-medium mb-3">Calendar</h2>
-      <div id="calendar-container" hx-get="/gcal/partial" hx-trigger="load, refreshGcal from:body" hx-swap="innerHTML"></div>
+      <div class="flex justify-between items-center mb-3">
+        <h2 class="text-xl font-medium">Calendar</h2>
+        <div class="text-xs">
+          <button onclick="updateCalendarDays(1)" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded-l-lg">Today</button>
+          <button onclick="updateCalendarDays(3)" class="px-2 py-1 bg-gray-200 dark:bg-gray-700">3d</button>
+          <button onclick="updateCalendarDays(7)" class="px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded-r-lg">Week</button>
+        </div>
+      </div>
+      <div id="calendar-container" 
+          hx-get="/gcal/partial?days=1" 
+          hx-trigger="load, refreshGcal from:body" 
+          hx-swap="innerHTML"></div>
     </div>
-  </div>
 
 
   <!-- Full-width widgets -->
